@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-deployment
+  labels:
+    app: hello-world-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-app
+  template:
+    metadata:
+      labels:
+        app: hello-world-app
+    spec:
+      containers:
+      - name: hello-world-app
+        image: audi/node-test:1
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128M"
+          limits:
+            cpu: "1000m"
+            memory: "512M"
+        ports:
+        - containerPort: 8080

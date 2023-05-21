@@ -1,0 +1,17 @@
+{
+  "name": "traveloka-submission",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "monit-test": "nodemon src/app.js"
+  },
+  "author": "Audi Aulia F",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.2",
+    "nodemon": "^2.0.22"
+  }
+}
