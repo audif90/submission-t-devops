@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-world-app
-        image: audi/node-test:1
+        image: placeholder-image-name
         resources:
           requests:
             cpu: "100m"

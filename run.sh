@@ -8,7 +8,6 @@ IMAGENAME=audi-project/submission:task-1
 build_docker_image() {
 echo -e '\e[42mPLACEHOLDER TEXT\e[49m'
 # TODO
-sed -i "s.placeholder-image-name.$IMAGENAME.g" Dockerfile
 docker build -t $IMAGENAME .
 echo -e '\n'
 }
