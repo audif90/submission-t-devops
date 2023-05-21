@@ -7,7 +7,7 @@ spec:
     app:  hello-world-app
   type:  NodePort
   ports:
-  - name:  name-of-the-port
+  - name:  hello-world-nodeport
     port:  80
     targetPort:  8080
     nodePort: 32000
