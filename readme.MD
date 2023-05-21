@@ -20,7 +20,7 @@ const server = Hapi.server({
 ``` 
 ### Packaging as Docker Container
 
-Simple enough, create a ```Dockerfile``` for the app. I use ``` node:lts-slim``` as it's a both slim and LTS version, making it would last long support and also small in size.
+Simple enough, create a ```Dockerfile``` for the app. I use ```node:lts-slim``` as it's a both slim and LTS version, making it would last long support and also small in size.
 
 ### Deploy the app to an orchestrator
 The requirements requires me to :
@@ -28,7 +28,7 @@ The requirements requires me to :
 
     This is achieveable by exposing the service to a ```NodePort```, then ```port-forward``` the port to Localhost.
 
-> :warning: Keep in mind, you will need root privileges to bind port 80 to a service **This is insecure**, there are other method such as using Ingress or running an Nginx instance outside of Kubernetes to bind the port to port 80 :warning:
+> :warning: Keep in mind, you will need root privileges to bind port 80 to a service **This is insecure**, there are other method such as using Ingress or running an Nginx instance outside of Kubernetes to bind the port to port 80 
 
 - **Limit its usage that it will consume 0.1 CPU + 128M memory by default and 1 CPU + 512M memory at max.**
 
@@ -50,8 +50,9 @@ I'm using a Docker Container for doing the load testing, the reason is so that I
 
 I've made a bash script that does the following:
 
+- **Check for root privileges*
 - **Build docker image**
 - **Apply the Kubernetes manifests**
 - **Run Load testing from Docker Container**
 
-The script should be executed in the same folder, under any user in the Docker group as its uses Docker
+The script should be executed in the same folder, under root as it needs root privileges to bind port 80 to localhost
