@@ -27,6 +27,9 @@ The requirements requires me to :
 - **Run the app using port 80**
 
     This is achieveable by exposing the service to a ```NodePort```, then ```port-forward``` the port to Localhost.
+
+> :warning: Keep in mind, you will need root privileges to bind port 80 to a service **This is insecure**, there are other method such as using Ingress or running an Nginx instance outside of Kubernetes to bind the port to port 80 
+
 - **Limit its usage that it will consume 0.1 CPU + 128M memory by default and 1 CPU + 512M memory at max.**
 
     In the Deployment manifest, we can easily adjust the bottom and upper limit of the pods. I configured it by putting the following
