@@ -50,7 +50,7 @@ I'm using a Docker Container for doing the load testing, the reason is so that I
 
 I've made a bash script that does the following:
 
-- **Check for root privileges*
+- **Check for root privileges**
 - **Build docker image**
 - **Apply the Kubernetes manifests**
 - **Run Load testing from Docker Container**
