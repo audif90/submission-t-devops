@@ -18,18 +18,14 @@ const server = Hapi.server({
         host: '0.0.0.0'
     })
 ``` 
+
 ### Packaging as Docker Container
 
 Simple enough, create a ```Dockerfile``` for the app. I use ```node:lts-slim``` as it's a both slim and LTS version, making it would last long support and also small in size.
 
 ### Deploy the app to an orchestrator
+
 The requirements requires me to :
-- **Run the app using port 80**
-
-    This is achieveable by exposing the service to a ```NodePort```, then use dockerized nginx to map the nodePort to localhost port 80. Since the host device has separate IP with the container itself, we could do a simple ```sed -i``` to replace the placeholder IP in the conf file with an output from ```hostname -I``` to map the proxy_pass block to the right place. 
-
-> :warning: there are other method such as using Ingress or port-forwarding the nodePort to localhost port 80 using ```sudo``` privileges. **This is unsafe!**. Thus the easiest and secure way to achieve this is using an external reverse proxy solution. Which is nginx in this case. 
-
 
 - **Limit its usage that it will consume 0.1 CPU + 128M memory by default and 1 CPU + 512M memory at max.**
 
@@ -43,6 +39,11 @@ The requirements requires me to :
             cpu: "1000m"
             memory: "512M"
     ```
+
+### Exposing the App
+In order to expose the app on ```localhost:80```, I'm using nginx. This is achieveable by exposing the service to a ```NodePort```, then use dockerized nginx to map the nodePort to localhost port 80. Since the host device has separate IP with the container itself, we could do a simple ```sed -i``` to replace the placeholder IP in the conf file with an output from ```hostname -I``` to map the proxy_pass block to the right place. 
+
+> :warning: there are other method such as using Ingress or port-forwarding the nodePort to localhost port 80 using ```sudo``` privileges. **This is unsafe!**. Thus the easiest and secure way to achieve this is using an external reverse proxy solution. Which is nginx in this case. 
 
 ### Load testing the application
 I'm using a Docker Container for doing the load testing, the reason is so that I can easily spawn a Docker Container using a Docker Image from Dockerhub 
