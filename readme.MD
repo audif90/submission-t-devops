@@ -26,9 +26,10 @@ Simple enough, create a ```Dockerfile``` for the app. I use ```node:lts-slim``` 
 The requirements requires me to :
 - **Run the app using port 80**
 
-    This is achieveable by exposing the service to a ```NodePort```, then ```port-forward``` the port to Localhost.
+    This is achieveable by exposing the service to a ```NodePort```, then use dockerized nginx to map the nodePort to localhost port 80. Since the host device has separate IP with the container itself, we could do a simple ```sed -i``` to replace the placeholder IP in the conf file with an output from ```hostname -I``` to map the proxy_pass block to the right place. 
 
-> :warning: Keep in mind, you will need root privileges to bind port 80 to a service **This is insecure**, there are other method such as using Ingress or running an Nginx instance outside of Kubernetes to bind the port to port 80 
+> :warning: there are other method such as using Ingress or port-forwarding the nodePort to localhost port 80 using ```sudo``` privileges. **This is unsafe!**. Thus the easiest and secure way to achieve this is using an external reverse proxy solution. Which is nginx in this case. 
+
 
 - **Limit its usage that it will consume 0.1 CPU + 128M memory by default and 1 CPU + 512M memory at max.**
 
@@ -53,6 +54,7 @@ I've made a bash script that does the following:
 - **Check for root privileges**
 - **Build docker image**
 - **Apply the Kubernetes manifests**
+- **Creating the reverse proxy for pointing service port to port 80**
 - **Run Load testing from Docker Container**
 
-The script should be executed in the same folder, under root as it needs root privileges to bind port 80 to localhost
+The script should be executed in the same folder, under any user who's in the Docker group.
