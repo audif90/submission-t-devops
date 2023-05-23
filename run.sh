@@ -31,7 +31,6 @@ echo -e '\n'
 
 run_load_testing() {
 echo -e '\e[42mRunning Load Testing\e[49m'
-# TODO
 docker run --rm jordi/ab -k -c 100 -n 5000 http://$HOSTIP/
 echo -e '\n'
 }
