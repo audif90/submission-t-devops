@@ -56,9 +56,8 @@ I'm using a Docker Container for doing the load testing, the reason is so that I
 
 ### Create automation script to set up the solution from stracth
 
-I've made a bash script that does the following:
+Aside from the required script for Building Docker Image & Applying k8s Manifests task, I've also made a bash script that does the following:
 
-- **Check for root privileges**
 - **Build docker image**
 - **Apply the Kubernetes manifests**
 - **Creating the reverse proxy for pointing service port to port 80**
