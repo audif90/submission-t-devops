@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-world-app
-        image: audi-project/submission:task-1
+        image: audi-project/placeholder-image-name
         resources:
           requests:
             cpu: "100m"

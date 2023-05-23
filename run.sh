@@ -16,6 +16,7 @@ apply_k8s_manifest() {
 echo -e '\e[42mApplying k8s Manifests\e[49m'
 sed -i "s.placeholder-image-name.$IMAGENAME.g" k8s/deployment.yaml
 kubectl apply -f k8s/deployment.yaml -f k8s/service.yaml
+sed -i "s.$IMAGENAME.placeholder-image-name.g" k8s/deployment.yaml
 echo -e '\n'
 }
 
@@ -31,6 +32,7 @@ echo -e '\n'
 run_load_testing() {
 echo -e '\e[42mRunning Load Testing\e[49m'
 # TODO
+docker run --rm jordi/ab -k -c 100 -n 5000 http://$HOSTIP/
 echo -e '\n'
 }
 
@@ -39,11 +41,11 @@ echo -e '\n'
 # Main
 
 clear # Cleaning the screen
-echo -e '\e[42mAutomation Script for task\e[49m'
+echo -e '\e[42mAutomation Script for all tasks\e[49m'
 echo -e '\n'
 
 # Running steps!
 build_docker_image
 apply_k8s_manifest
 exposing_port_with_nginx
-# run_load_testing
+run_load_testing

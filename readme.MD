@@ -43,7 +43,7 @@ The requirements requires me to :
 ### Exposing the App
 In order to expose the app on ```localhost:80```, I'm using nginx. This is achieveable by exposing the service to a ```NodePort```, then use dockerized nginx to map the nodePort to localhost port 80. Since the host device has separate IP with the container itself, we could do a simple ```sed -i``` to replace the placeholder IP in the conf file with an output from ```hostname -I``` to map the proxy_pass block to the right place. 
 
-First, I prepared a simple configuration template for ```proxy_pass```, with the destination's IP Address written as ```placeholder-host-ip```. Then I ran a ```sed -i "s/placeholder-host-ip/ **Host's IP Variable**/g" default.conf``` to replace the existing placeholder file with a new one with the host's IP. Then I ran the Docker Container with the syntax below
+First, I prepared a simple configuration template for ```proxy_pass```, with the destination's IP Address written as ```placeholder-host-ip```. Then I ran a ```sed -i "s/placeholder-host-ip/<Host's IP Variable>/g" default.conf``` to replace the existing placeholder file with a new one with the host's IP. Then I ran the Docker Container with the syntax below
 ```bash
 docker run -d --name nginx-reverse-proxy -p 80:80 -v $(pwd)/conf/default.conf:/etc/nginx/conf.d/default.conf:ro nginx:latest
 ```
