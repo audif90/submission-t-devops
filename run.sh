@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Predefined variables
-IMAGENAME=audi-project/submission:task-1
+IMAGENAME=audi-project/submission:task-2
 HOSTIP=$(hostname -I | sed 's/ *$//') # single liner for cutting trailing space
 
 # Functions for automation
@@ -12,11 +12,16 @@ docker build -t $IMAGENAME .
 echo -e '\n'
 }
 
+deploying_mongo_db() {
+    docker run --name mongodb-container -d -p 27017:27017 mongo:jammy     
+}
+
 apply_k8s_manifest() {
 echo -e '\e[42mApplying k8s Manifests\e[49m'
 sed -i "s.placeholder-image-name.$IMAGENAME.g" k8s/deployment.yaml
 kubectl apply -f k8s/deployment.yaml -f k8s/service.yaml
 sed -i "s.$IMAGENAME.placeholder-image-name.g" k8s/deployment.yaml
+kubectl apply -f k8s/mongodb/mongo-configmap.yaml -f k8s/mongodb/mongo-pv-pvc.yaml -f k8s/mongodb/mongo-secret.yaml -f k8s/mongodb/mongo-statefulset.yaml  
 echo -e '\n'
 }
 
